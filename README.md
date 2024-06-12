@@ -40,7 +40,7 @@ numPlayers = 2
 
 **Modo automático:**
 
-* El modo automático aún no está implementado.
+* Work-in-progress
 ## Estructura del código
 
 El código está dividido en varias clases:
@@ -70,6 +70,33 @@ Press C to continue next turn, or E to end the game: C
 
 Press C to continue next turn, or E to end the game: C
 3 1 6 5 S 3
+
+# Nueva v2.2 11/Junio/2024
+
+**Excepciones:**
+
+Se crean las clases InvalidConfigurationException e InvalidOptionException que heredan de std::exception. Estas clases tienen un método what() que devuelve un mensaje de error descriptivo.
+
+**Manejo de excepciones en el constructor Game:**
+
+Se valida que numPlayers y maxTurns sean mayores que 0 en el constructor de la clase Game. Si no lo son, se lanza una excepción InvalidConfigurationException.
+
+**Manejo de excepciones en ManualGame::play:**
+
+Se utiliza un bloque try-catch para capturar la excepción InvalidOptionException si el usuario ingresa una opción inválida.
+Se agrega un contador invalidOptionCount para llevar un registro de cuántas veces consecutivas el usuario ingresa una opción inválida.
+Si invalidOptionCount alcanza 5, el juego termina y se muestra el mensaje "Invalid menu choice exceeded".
+
+**Manejo de excepciones en main:**
+
+Se utiliza un bloque try-catch para capturar la excepción InvalidConfigurationException al crear el juego. Si se lanza la excepción, se imprime el mensaje de error y el programa termina con un código de salida de 1.
+
+**Liberación de memoria:**
+
+Se asegura de liberar la memoria asignada dinámicamente para el tablero (board) y el objeto del juego (game) al final de la función main.
+
+
+
 
 ...
 
